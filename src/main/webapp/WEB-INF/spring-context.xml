@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--整个配置文件的根节点，包含一个或多个bean元素-->
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--此项目使用注解映射-->
+    <mvc:annotation-driven/>
+
+    <!--开启组件自动扫描，描述路径由base-package属性指定。告诉我你的 Controller在那个包中-->
+    <context:component-scan base-package="org.taru.controller"/>
+    <context:component-scan base-package="org.taru.api"/>
+
+    <!-- 静态资源 路径-->
+    <mvc:resources mapping="/static/css/**" location="/static/css/"  />
+    <mvc:resources mapping="/static/js/**" location="/static/js/"  />
+    <mvc:resources mapping="/static/images/**" location="/static/images/"  />
+
+ <!--jsp解析器，InternalResourceViewResolver需要配置再最后，order值(优先级最低)最高，要比其他解析器低，因为不管其优先级如何，最后一定会执行，但是优先级高于其他解析器会导致其他解析器不起作用 -->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="contentType" value="text/html:charset=UTF-8"/>
+
+    </bean>
+
+    <!-- 支持上传文件 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"></property>
+        <property name="maxUploadSize" value="10485760000"></property>
+        <property name="maxInMemorySize" value="40960"></property>
+    </bean>
+
+    <!--将 属性配置文件 注入到 Spring IOS 这个大容器中-->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:application.properties"/>
+
+    <bean id="testBean" class="org.taru.vo.Test">
+        <property name="tsetName" value="E:\\Spring-mvc"/>
+    </bean>
+
+    <!-- 配置 拦截器-->
+<!--    <mvc:interceptors>-->
+<!--        <mvc:interceptor>-->
+<!--            <mvc:mapping path="/**"/>-->
+<!--            <bean class="org.taru.interceptor.AtuchInterceptor"/>-->
+<!--        </mvc:interceptor>-->
+<!--    </mvc:interceptors>-->
+</beans>

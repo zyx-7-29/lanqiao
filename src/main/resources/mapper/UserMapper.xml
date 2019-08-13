@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.BlogMapper">
+    <!--查询所有用户-->
+    <select id="selectUsers" resultType="org.taru.Entity.User" >
+        select user_id as userid,
+        user_name as userUserName,
+        user_password as userPassword
+        from user
+   </select>
+
+    <!--添加用户  如果参数是引用类型  占位符的赋值方式为ongl表达式的方式{属性名}-->
+    <insert id="UserAdd" parameterType="org.taru.Entity.User">
+        insert into user(user_id,user_name,user_password) values (#{userId},#{userUserName},#{userPassword})
+    </insert>
+
+    <!--根据id 查找用户-->
+    <select id="findUserById" parameterType="int" resultType="org.taru.Entity.User">
+        select user_id as userId,user_name as userUserName  from user where user_id=#{userId}
+    </select>
+
+    <!--修改用户-->
+    <update id="UserUpdate" parameterType="org.taru.Entity.User">
+        update user set user_name =#{userUserName},user_password=#{userPassword} WHERE user_id=#{userId}
+    </update>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--导入jdbc配置文件-->
+    <properties resource="jdbc.properties"></properties>
+<!--    <typeAliases>-->
+<!--        &lt;!&ndash;<typeAlias type="" alias=""></typeAlias>&ndash;&gt;-->
+<!--        <package name="org.taru.Entity"/>-->
+<!--    </typeAliases>-->
+    <!--连接数据库的环境，默认开发环境development-->
+
+    <!--开发环境-->
+    <environments default="development">
+        <environment id="development">
+            <!--事务管理-->
+            <transactionManager type="JDBC"/>
+            <!--开启内置连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/><!--jdbc文件中的 数据-->
+                <property name="password" value="${password}"/><!--jdbc文件中的 数据-->
+            </dataSource>
+        </environment>
+    </environments>
+    <!--数据源：告诉我我写的sql语句在哪-->
+    <mappers>
+        <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/PrivMapper.xml"/>
+    </mappers>
+</configuration>

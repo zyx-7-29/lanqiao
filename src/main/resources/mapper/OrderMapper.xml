@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.BlogMapper">
+    <resultMap id="BaseResultMap" type="com.taru.mapper.pojo.Order">
+        <id column="ORDER_ID" property="orderUserId" jdbcType="VARCHAR"></id>
+        <result column="ORDER_USER_ID" property="orderuserId" jdbcType="VARCHAR"/>
+        <result column="ORDER_DATE_TIME_ID" property="orderdatetime" jdbcType="TIMVSTAMP"/>
+        <association property="user" javaType="com.taru.wxhsh.pofo.User">
+            <id column="USER_ID" property="userId" jdbcType="VARCHAR"></id>
+            <id column="USER_USER_NAME" property="userUserName" jdbcType="VARCHAR"></id>
+        </association>
+    </resultMap>
+
+    <!--一对多 -->
+    <!--嵌套结果：使用嵌套结果映射来处理重复的联合的子集-->
+
+
+</mapper>

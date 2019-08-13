@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.BlogMapper"> <!--mapper数据源。mapper的namespace属性区分不同表中查询的sql语句的名字冲突-->
+    <resultMap id="BaseResultMap" type="org.taru.Entity.Priv">
+        <result property="privName" column="fatherMeun"></result>
+        <collection property="privs"  ofType="org.taru.Entity.Priv">
+            <result property="privName" column="sonMeun"></result>
+        </collection>
+    </resultMap>
+    <select id="SelectMenu" resultMap="BaseResultMap"><!--id 给当前的sql语句起一个识别id   parameterType参数类型  resultType结果集封装的类型-->
+            SELECT
+                f.priv_name as fatherMeun,
+                a.priv_name as sonMeun
+            FROM
+                privs a
+                JOIN privs f ON a.priv_father_id = f.priv_id
+                LEFT JOIN role_priv b ON a.priv_id = b.priv_id
+                LEFT JOIN role c ON b.role_id = c.role_id
+                LEFT JOIN user_role d ON c.role_id = d.role_id
+                LEFT JOIN USER e ON d.user_id = e.user_id
+            WHERE
+                e.user_name = 'zyx'
+    </select>
+
+    <!--resultMap 是mybatis最强大的元素，它可以将查询到的复杂数据（比如查询到几个表中数据）映射到一个结果集当中-->
+    <!--    <resultMap id="唯一的标识" type="映射的pojo对象">-->
+    <!--        <id column="表的主键字段，或者可以为查询语句中的别名字段" jdbcType="字段类型" property="映射pojo对象的主键属性" ></id>-->
+    <!--        <result column="表的一个字段(可以为任意一个表的字段)" jdbcType="字段类型" property="映射到pojo对象的一个属性(须为type定义的pojo对象中的一个属性)"></result>-->
+    <!--        <association property="pojo的一个对象属性" javaType="pojo关联的pojo对象">-->
+    <!--            <id column="关联pojo对象对应表的主键字段" jdbcType="字段类型" property="关联pojo对象的主键属性"></id>-->
+    <!--            <result column="任意表的字段" jdbcType="字段类型" property="关联pojo对象的属性"></result>-->
+    <!--        </association>-->
+    <!--        &lt;!&ndash;集合中的property须为oftype定义的pojo对象的属性&ndash;&gt;-->
+    <!--        <collection property="pojo的集合属性" ofType="集合中的pojo对象">-->
+    <!--            <id column="集合中pojo对象对应的表的主键字段" jdbcType="字段类型" property="集合中pojo对象的主键属性"></id>-->
+    <!--            <result column="可以为任意表的字段" jdbcType="字段类型" property="集合中的pojo对象的属性"></result>-->
+    <!--        </collection>-->
+    <!--    </resultMap>-->
+</mapper>
+        <!--这个xml文件  是：实体类(即pojo/Entity/modle)同级目录的 映射文件-->
+
